@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/own.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ajax.js"></script>
+
+    <script type="text/javascript">
+        var url = window.location.pathname;
+        var filename = url.substring(url.lastIndexOf('/') + 1);
+        if (sessionStorage.login == "true" && filename == 'login.html') { window.location.href = "order.html"; }
+    </script>
+
+    <!-- Website Font style -->
+    <title>JanetAPP</title>
+</head>
+<body>
+
+    <div class="container" style="width:90%;margin:0 auto;">
+        <div class="row main">
+            <div class="panel-heading">
+                <div class="panel-title text-center">
+                    <img src="http://i.imgur.com/m6SKD5h.png" style="height:auto; width:70%;margin-top:-8px;"></img>
+                    <hr />
+                </div>
+            </div>
+            <div class="main-login main-center">
+                <form class="form-horizontal" method="post" action="#">
+
+                    <div class="form-group">
+                        <label for="name" class="cols-sm-2 control-label">Imie:</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Podaj swoje imie" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="surname" class="cols-sm-2 control-label">Nazwisko:</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" class="form-control" name="surname" id="surname" placeholder="Podaj swoje nazwisko" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="number" class="cols-sm-2 control-label">Numer:</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+
+                                <input type="number" class="form-control" name="number" id="number" placeholder="Podaj swój numer" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="class" class="cols-sm-2 control-label">Klasa</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+
+                                <select class="form-control" id="sell">
+                                    <option selected="true" disabled="disabled">Wybierz klasę</option>
+                                    <option value="1aT">1aT</option>
+                                    <option value="1aT">1aT</option>
+                                    <option value="1bT">1bT</option>
+                                    <option value="1dT">1dT</option>
+                                    <option value="1fT">1fT</option>
+                                    <option value="2aT">2aT</option>
+                                    <option value="2bT">2bT</option>
+                                    <option value="2cT">2cT</option>
+                                    <option value="2dT">2dT</option>
+                                    <option value="2fT">2fT</option>
+                                    <option value="3aT">3aT</option>
+                                    <option value="3cT">3cT</option>
+                                    <option value="3eT">3eT</option>
+                                    <option value="3fT">3fT</option>
+                                    <option value="4aT">4aT</option>
+                                    <option value="4bT">4bT</option>
+                                    <option value="4cT">4cT</option>
+                                    <option value="4eT">4eT</option>
+                                    <option value="4fT">4fT</option>
+                                    <option value="1aZ">1aZ</option>
+                                    <option value="1bZ">1bZ</option>
+                                    <option value="1cZ">1cZ</option>
+                                    <option value="2aZ">2aZ</option>
+                                    <option value="2bZ">2bZ</option>
+                                    <option value="2cZ">2cZ</option>
+                                    <option value="2dZ">2dZ</option>
+                                    <option value="3aZ">3aZ</option>
+                                    <option value="3bZ">3bZ</option>
+                                    <option value="3cZ">3cZ</option>
+                                    <option value="3dZ">3dZ</option>
+                                    <option value="Nauczyciel">Nauczyciel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="cols-sm-2 control-label">Hasło:</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Podaj swoje hasło" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm" class="cols-sm-2 control-label">Potwierdź hasło:</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Potwierdź swoje hasło" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <button type="button" id="register" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                    </div>
+
+                    <div class="login-register">
+                        <a href="login.html">Już mam konto!(zaloguj sie)</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+</html>

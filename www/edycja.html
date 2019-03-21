@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/own.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ajax.js"></script>
+
+    <script type="text/javascript">
+        var url = window.location.pathname; var filename = url.substring(url.lastIndexOf('/') + 1);
+        if (sessionStorage.login == "true" && filename == 'login.html') { window.location.href = "yourorder.html"; }
+        else if (sessionStorage.login == "false" && filename != 'login.html') { window.location.href = "login.html"; }
+        else if (sessionStorage.ban == "1" && filename == 'yourorder.html') { alert("Twoje konto jest zbanowane. Skontaktuj się z administratorami w razie jakichkolwiek pytań"); sessionStorage.clear(); window.location.href = "login.html"; }
+    </script>
+
+    <!-- SKYPT DZIAŁAJĄCY NA DANYCH-->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if (sessionStorage.admin == "1") {
+                $('#admin').show();
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1/janeta/www/php/produkty.php",
+                beforeSend: function () { $("#loader").show(); },
+                data: { 'order_id': '7429111' },
+                crossDomain: true,
+
+                success: function (data) {
+                    if (data == "already") {
+                        $("#danger").hide();
+                        $("#loader").hide();
+                        $("#show").hide();
+                    }
+                    else {
+                        $("#pokaz").html(data);
+                        $("#loader").hide();
+                        $("#danger").show();
+                        $("#show").show();
+                    }
+                },
+                error: function () {
+                    $("#loader").hide();
+                    $("#error").show();
+                }
+            });
+        });
+    </script>
+
+    <title>JanetAPP</title>
+</head>
+
+<body>
+
+    <div class="content" style="padding-top:20px;">
+        <div class="alert alert-success" id="nic" style="display:none;">
+            Zamówienie zostało potwierdzone!
+        </div>
+        <div class="jumbotron text-center" style="margin-top:-20px;">
+            <h3>Zobacz swoje zamówienia!</h3>
+
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p id="twojeid" style="margin:0 auto;">
+                        <div class="alert alert-danger" id="danger" style="display:none;">
+                            Uwaga! Musisz najpierw potwierdzić zamówienie!
+                        </div>
+                    </p><br>
+                </div>
+            </div> <div id="pokaz">
+
+            </div>
+            <button type="button" id="show" class="btn btn-primary btn-block" style="display:none;">Potwierdź!</button><br>
+
+
+            <div id="loader"></div>
+
+            <div class="alert alert-danger" id="error" style="display:none;">
+                Coś musiało pójść nie tak... sprawdź połączenie z internetem i spróbuj ponownie! :)
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>
